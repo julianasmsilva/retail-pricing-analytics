@@ -1,30 +1,25 @@
 sql
--- Projeto: Análise de Competitividade de Preços
--- Autor: Juliana Silva
+-- PROJETO: Análise de Vendas e Desvios de Preço (Caso Prático)
+-- AUTOR: Juliana Silva
 
--- QUERY 1: Identificar desvios de preços críticos face à concorrência
-SELECT 
-    c.id_concorrente,
-    p.id_produto,
-    p.categoria,
-    p.preco_base AS nosso_preco,
-    c.preco_concorrente AS preco_mercado,
-    ROUND(((p.preco_base - c.preco_concorrente) / p.preco_base) * 100, 2) AS percentagem_desvio
-FROM produtos p
-JOIN trends_pricing c ON p.id_produto = c.id_produto
-WHERE c.preco_concorrente < (p.preco_base * 0.80)
-ORDER BY percentagem_desvio DESC;
+-- 1. Identificar produtos que foram vendidos com preços diferentes no mesmo dia
+SELECT id_produto, COUNT(DISTINCT preco_unitario) AS total_precos_diferentes
+FROM vendas_lojas
+GROUP BY id_produto
+HAVING COUNT(DISTINCT preco_unitario) > 1;
 
--- QUERY 2: Obter o preço monitorizado mais recente por produto usando Window Functions
-WITH ranking_precos AS (
-    SELECT 
-        id_produto, 
-        id_concorrente,
-        preco_concorrente, 
-        data_verificacao,
-        ROW_NUMBER() OVER(PARTITION BY id_produto, id_concorrente ORDER BY data_verificacao DESC) AS rn
-    FROM trends_pricing
-)
-SELECT id_produto, id_concorrente, preco_concorrente, data_verificacao
-FROM ranking_precos
-WHERE rn = 1;
+
+-- 2. Calcular a receita total e quantidade vendida por categoria de produto
+SELECT categoria, 
+       SUM(quantidade) AS total_itens_vendidos,
+       SUM(quantidade * preco_unitario) AS receita_total
+FROM vendas_lojas
+GROUP BY categoria
+ORDER BY receita_total DESC;
+
+
+-- 3. Filtrar apenas as categorias que geraram mais de 5.000€ em receita
+SELECT categoria, SUM(quantidade * preco_unitario) AS receita_total
+FROM vendas_lojas
+GROUP BY categoria
+HAVING SUM(quantidade * preco_unitario) > 5000;

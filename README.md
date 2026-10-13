@@ -1,17 +1,11 @@
-# 📊 Retail Pricing & Competitiveness Analytics
+# 📊 Retail Sales & Pricing SQL Analysis
 
-## 🎯 Project Overview
-This repository showcases an automated data pipeline designed to tackle scalability issues in e-commerce pricing monitoring. Inspired by data challenges in global fashion marketplaces, this project demonstrates how to scale item analysis from **20 to 200 daily articles per analyst** by replacing manual validation loops with automated anomaly detection scripts.
+## 🎯 Objetivo do Projeto
+Este repositório contém um conjunto de queries em SQL desenvolvidas para analisar o comportamento de vendas e identificar anomalias de preços num cenário de retalho (E-commerce). O objetivo é responder a perguntas de negócio essenciais para a tomada de decisão de um Diretor Comercial.
 
-## 🛠️ Tech Stack & Skills
-- **Python (Pandas & NumPy):** Data generation, automated cleaning, and threshold filtering.
-- **SQL (PostgreSQL):** Advanced querying, relational database joins, and Analytical Window Functions (`ROW_NUMBER()`).
-- **Data Engineering Concept:** Transforming slow, operational data review into scalable, alert-driven insights.
+## 🛠️ Competências Demonstradas
+- **SQL:** Agregações (`SUM`, `COUNT`), agrupamentos (`GROUP BY`), filtros avançados (`HAVING`) e contagens distintas (`DISTINCT`).
+- **Análise de Negócio:** Monitorização de faturação, deteção de erros de preço e performance de categorias.
 
-## 📈 Key Insights & Business Value
-- **Scalability Built-in:** The logic isolates pricing mismatches greater than 20%, allowing human teams to focus strictly on business-critical anomalies.
-- **Data-Driven Strategy:** Helps Commercial Directors protect profit margins by identifying exactly which competitors are undercutting prices in real-time.
-
-## 🚀 Structure
-1. Run `analise_pricing.py` to simulate and generate the data stream.
-2. Open `queries.sql` to execute analytical business logic under database structures.
+## 🚀 Como consultar as respostas
+Abra o ficheiro `queries.sql` neste repositório para visualizar o código SQL correspondente a cada análise realizada.
